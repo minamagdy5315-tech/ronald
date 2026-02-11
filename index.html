@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Simulation ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #ff4d6d; --bg: #fff0f3; }
+        body { background-color: var(--bg); margin: 0; font-family: 'Cairo', sans-serif; text-align: center; overflow-x: hidden; transition: 1s; padding-bottom: 50px; }
+        body.valentine-mode { background-color: #ffb3c1; background-image: url('https://www.transparenttextures.com/patterns/hearts.png'); }
+        .v-header { background: linear-gradient(135deg, #ff4d6d, #ff85a1); padding: 30px 20px; color: white; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .v-header h1 { font-family: 'Pacifico', cursive; font-size: 2rem; margin: 0; }
+        .timer-card { background: white; padding: 20px; border-radius: 25px; width: 85%; max-width: 400px; margin: 0 auto 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        #timer { font-size: 1.8rem; color: var(--primary); font-weight: bold; direction: ltr; }
+        #reveal-btn, #yes-btn { background: var(--primary); color: white; border: none; padding: 15px 35px; border-radius: 40px; font-size: 1.3rem; cursor: pointer; display: none; font-family: 'Cairo'; font-weight: bold; margin: 20px auto; }
+        .slide-container { width: 90%; max-width: 350px; height: 350px; margin: 20px auto; position: relative; border-radius: 30px; overflow: hidden; border: 6px solid white; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .slide { position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s; }
+        .slide.active { opacity: 1; }
+        .surprise-box { display: none; background: white; padding: 25px; border-radius: 25px; width: 85%; max-width: 380px; margin: 20px auto; border: 2px solid var(--primary); }
+        input[type="date"] { border: 2px solid var(--primary); padding: 12px; border-radius: 12px; width: 85%; margin-bottom: 15px; }
+        .btn-date { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 12px; cursor: pointer; font-weight: bold; width: 90%; }
+        .coupon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; max-width: 500px; margin: 0 auto; }
+        .coupon-card { background: white; border-radius: 20px; overflow: hidden; padding-bottom: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .coupon-img { width: 100%; height: 110px; object-fit: cover; }
+        .btn-c { background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 12px; cursor: pointer; font-family: 'Cairo'; }
+        #gift-box { position: fixed; width: 60px; height: 60px; font-size: 50px; cursor: pointer; z-index: 2000; transition: all 0.8s; opacity: 0; }
+        #gift-message { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); background: white; padding: 20px; border-radius: 20px; border: 3px solid var(--primary); z-index: 3000; font-weight: bold; transition: 0.3s; color: var(--primary); width: 220px; }
+        #cinema-section { display: none; padding: 20px; }
+        .video-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 500px; margin: 0 auto; }
+        video { width: 100%; border-radius: 15px; background: #000; }
+    </style>
+</head>
+<body onload="initApp()">
+    <audio id="track1" src="https://files.catbox.moe/oxw65p.mp3" loop></audio>
+    <audio id="medhat-song" src="https://files.catbox.moe/v3z6hn.mp3" loop></audio>
+    <header class="v-header"><h1>Valentine Simulation ❤️</h1></header>
+    <div id="action-zone">
+        <div class="timer-card" id="timer-box"><span id="timer">00:00:00</span><p style="margin:5px 0 0; color:#888;">جاري المحاكاة.. فاضل شوية ❤️</p></div>
+        <button id="reveal-btn" onclick="openSurpriseBox()">Show Your Surprise ❤️</button>
+        <div id="surprise-container" class="surprise-box">
+            <h3 style="color: var(--primary);">📅 Choose Our Date</h3>
+            <input type="date" id="v-date">
+            <button class="btn-date" onclick="sendDate()">تأكيد الموعد ✨</button>
+            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+            <h2 style="color: var(--primary);">Do You Love Me? ❤️</h2>
+            <button id="yes-btn" style="display:block;" onclick="finalCelebrate()">Yes Forever! ❤️</button>
+        </div>
+    </div>
+    <div class="slide-container">
+        <img class="slide active" src="https://i.ibb.co/YTRhKgGW/IMG-20250916-WA0000.jpg">
+        <img class="slide" src="https://i.ibb.co/60dNGbt5/IMG-20260205-WA0011.jpg">
+        <img class="slide" src="https://i.ibb.co/RTjfzT5S/IMG-20251212-WA0004.jpg">
+        <img class="slide" src="https://i.ibb.co/xKbBbj6N/IMG-20251101-WA0024.jpg">
+    </div>
+    <div id="gift-box" onclick="popLove()">🎁</div>
+    <div id="gift-message"></div>
+    <div id="cinema-section">
+        <h2 style="color: var(--primary);">Every Date Is A Story .. ❤️</h2>
+        <div class="video-grid">
+            <video muted loop playsinline><source src="https://files.catbox.moe/ihiely.mp4"></video>
+            <video muted loop playsinline><source src="https://files.catbox.moe/qsocsx.mp4"></video>
+        </div>
+    </div>
+    <script>
+        // الوقت المعدل للتجربة: 11 فبراير الساعة 2:50 م
+        const targetDate = new Date("Feb 11, 2026 14:50:00").getTime();
+        const phone = "201157419724";
+        const messages = ["بحبك ❤️", "يا كل ما ليا ✨", "ربنا يخليكي ليا 💋"];
+
+        function initApp() {
+            document.addEventListener('click', () => { 
+                const t1 = document.getElementById('track1');
+                if(!document.body.classList.contains('celebrating')) t1.play().catch(()=>{}); 
+            }, { once: false });
+            setInterval(() => {
+                const diff = targetDate - new Date().getTime();
+                if (diff > 0) {
+                    const d = Math.floor(diff/86400000), h = Math.floor((diff%86400000)/3600000), m = Math.floor((diff%3600000)/60000), s = Math.floor((diff%60000)/1000);
+                    document.getElementById("timer").innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+                } else {
+                    document.getElementById("timer-box").style.display = "none";
+                    document.getElementById("reveal-btn").style.display = "block";
+                }
+            }, 1000);
+            let sIdx = 0; const slides = document.querySelectorAll(".slide");
+            setInterval(() => { slides[sIdx].classList.remove("active"); sIdx = (sIdx+1)%slides.length; slides[sIdx].classList.add("active"); }, 3000);
+            moveGift();
+        }
+        function moveGift() { const gift = document.getElementById('gift-box'); gift.style.left = Math.random() * (window.innerWidth - 60) + 'px'; gift.style.top = Math.random() * (window.innerHeight - 60) + 'px'; gift.style.opacity = (gift.style.opacity == '1') ? '0' : '1'; setTimeout(moveGift, 2000); }
+        function popLove() { const m = document.getElementById('gift-message'); m.innerText = messages[Math.floor(Math.random() * messages.length)]; m.style.transform = "translate(-50%, -50%) scale(1)"; setTimeout(() => m.style.transform = "translate(-50%, -50%) scale(0)", 2000); }
+        function openSurpriseBox() { document.getElementById("reveal-btn").style.display = "none"; document.getElementById("surprise-container").style.display = "block"; }
+        function sendDate() { const dateVal = document.getElementById('v-date').value; if(!dateVal) { alert("اكتبي التاريخ الأول ❤️"); return; } window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent("بيبي أنا اخترت ديت الفلانتين يوم: " + dateVal + " ❤️")}`); }
+        function finalCelebrate() { document.body.classList.add('celebrating'); const t1 = document.getElementById('track1'); t1.pause(); t1.currentTime = 0; document.getElementById('medhat-song').play(); document.body.classList.add("valentine-mode"); document.getElementById("surprise-container").style.display = "none"; document.getElementById("cinema-section").style.display = "block"; document.getElementById("cinema-section").querySelectorAll("video").forEach(v => v.play()); window.scrollTo({ top: document.getElementById("cinema-section").offsetTop, behavior: 'smooth' }); }
+    </script>
+</body>
+</html>
