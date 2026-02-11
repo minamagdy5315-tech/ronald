@@ -13,7 +13,7 @@
         .v-header h1 { font-family: 'Pacifico', cursive; font-size: 2rem; margin: 0; }
         .timer-card { background: white; padding: 20px; border-radius: 25px; width: 85%; max-width: 400px; margin: 0 auto 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         #timer { font-size: 1.8rem; color: var(--primary); font-weight: bold; direction: ltr; }
-        #reveal-btn, #yes-btn { background: var(--primary); color: white; border: none; padding: 15px 35px; border-radius: 40px; font-size: 1.3rem; cursor: pointer; display: none; font-family: 'Cairo'; font-weight: bold; margin: 20px auto; }
+        #reveal-btn, #yes-btn,.btnn { background: var(--primary); color: white; border: none; padding: 15px 35px; border-radius: 40px; font-size: 1.3rem; cursor: pointer; display: none; font-family: 'Cairo'; font-weight: bold; margin: 20px auto; }
         .slide-container { width: 90%; max-width: 350px; height: 350px; margin: 20px auto; position: relative; border-radius: 30px; overflow: hidden; border: 6px solid white; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
         .slide { position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s; }
         .slide.active { opacity: 1; }
@@ -38,6 +38,9 @@
     <div id="action-zone">
         <div class="timer-card" id="timer-box"><span id="timer">00:00:00</span><p style="margin:5px 0 0; color:#888;">جاري المحاكاة.. فاضل شوية ❤️</p></div>
         <button id="reveal-btn" onclick="openSurpriseBox()">Show Your Surprise ❤️</button>
+        
+        <a href="https://minamagdy5315-tech.github.io/lolo-maze/" class=".btnn" > The Maze</a>
+
         <div id="surprise-container" class="surprise-box">
             <h3 style="color: var(--primary);">📅 Choose Our Date</h3>
             <input type="date" id="v-date">
